@@ -105,7 +105,13 @@ module Prawn
         x,y = map_to_absolute(options[:at]) 
       else                  
         x,y = image_position(w,h,options) 
-        move_text_position h   
+
+        bottom = @bounding_box.stretchy? ? @margin_box.absolute_bottom : @bounding_box.absolute_bottom
+	      page_skipping = (y - h) < bottom
+
+        move_text_position h
+        
+				y = @bounding_box.absolute_top if page_skipping
       end
 
       # add a reference to the image object to the current page
