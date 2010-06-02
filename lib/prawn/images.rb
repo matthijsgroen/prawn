@@ -324,6 +324,19 @@ module Prawn
           h = bh
           w = bh * ip
         end
+      elsif options[:max] 
+        bw, bh = options[:max]
+        bw = [bw, w].min
+        bh = [bh, h].min
+        bp = bw / bh.to_f
+        ip = info.width / info.height.to_f
+        if ip > bp
+          w = bw
+          h = bw / ip
+        else
+          h = bh
+          w = bh * ip
+        end
       end
       info.scaled_width = w
       info.scaled_height = h
